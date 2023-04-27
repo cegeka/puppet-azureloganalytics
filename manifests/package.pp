@@ -1,4 +1,4 @@
-# Class: bookkeeper::package
+# Class: azureloganalytics::package
 #
 # This is a private class and should not be called directly
 #
