@@ -5,7 +5,6 @@
 class azureloganalytics::params (
   $service_enable = true,
   $service_ensure = 'running',
-  $service_manage = true,
   $service_name = ['omid','omsagent'],
   $package_ensure = 'present',
   $package_name = ['omi','omsagent','omsconfig','scx'],
