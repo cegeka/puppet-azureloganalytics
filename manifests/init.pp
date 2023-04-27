@@ -4,31 +4,36 @@
 #
 # Parameters:
 #
+# @param workspaceid
+#   Use workspace ID for automatic onboarding."
+#
+# @param sharedkey
+#   Use <key> as the shared key for automatic onboarding."
+#
+# @param url
+#   Use <url> as the OMS domain for onboarding.."
+#   default: opinsights.azure.com"
+#
 # @param package_ensure
 #   Controls if the managed resources shall be `present` or `absent`.
-#   If set to `absent`, the managed software packages will be uninstalled, and
-#   any traces of the packages will be purged as well as possible, possibly
-#   including existing configuration files.
-#   System modifications (if any) will be reverted as well as possible (e.g.
-#   removal of created users, services, changed log settings, and so on).
-#   This is a destructive parameter and should be used with care.
 #
 # @param package_name
 #   Name Of the package to install.
 #
 # @param service_enable
+#   Enable the service on boot.
+#
 # @param service_ensure
-# @param service_manage
+#   Control if the service is `running` or `stopped`.
+#
 # @param service_name
-# @param url
+#   A list of services to manage.
+#
 # @param cef_enable
+#   Control to manage the Azure Log Analytics CEF forwarding on port 25226.
+#
 # @param omshelper_disable
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
+#   Control to manage the Azure Log Analytics OMS Cloud sync.
 #
 class azureloganalytics (
   String                      $workspaceid,
@@ -37,7 +42,6 @@ class azureloganalytics (
   Array                       $package_name   = $::azureloganalytics::params::package_name,
   Boolean                     $service_enable = $::azureloganalytics::params::service_enable,
   Enum['stopped', 'running']  $service_ensure = $::azureloganalytics::params::service_ensure,
-  Boolean                     $service_manage = $::azureloganalytics::params::service_manage,
   Array                       $service_name   = $::azureloganalytics::params::service_name,
   String                      $url            = $::azureloganalytics::params::url,
   Boolean                     $cef_enable     = $::azureloganalytics::params::cef_enable,
