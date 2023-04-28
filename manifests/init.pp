@@ -45,12 +45,19 @@ class azureloganalytics (
   Array                       $service_name   = $::azureloganalytics::params::service_name,
   String                      $url            = $::azureloganalytics::params::url,
   Boolean                     $cef_enable     = $::azureloganalytics::params::cef_enable,
-  Boolean                     $omshelper_disable = $azureloganalytics::params::omshelper_disable
+  Boolean                     $omshelper_disable = $azureloganalytics::params::omshelper_disable,
+  String                      $proxy_ensure   = $azureloganalytics::params::proxy_ensure,
+  String                      $proxy_protocol = $azureloganalytics::params::proxy_protocol,
+  Integer                     $proxy_port     = $azureloganalytics::params::proxy_port,
+  Variant[String,Undef]       $proxy_username = undef,
+  Variant[String,Undef]       $proxy_password = undef,
+  Variant[String,Undef]       $proxy_host     = undef
 ) inherits azureloganalytics::params {
 
   contain 'azureloganalytics::package'
   contain 'azureloganalytics::onboarding'
   contain 'azureloganalytics::config'
+  contain 'azureloganalytics::proxy'
   contain 'azureloganalytics::service'
 
 }

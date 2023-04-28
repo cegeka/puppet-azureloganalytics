@@ -11,7 +11,11 @@ class azureloganalytics::params (
   $url = 'opinsights.azure.com',
   $cef_enable = false,
   $omshelper_disable = false,
-  $onboarding_config = '/etc/omsagent-onboard.conf'
+  $onboarding_config = '/etc/omsagent-onboard.conf',
+  $proxy_ensure = absent,
+  $proxy_config = '/etc/opt/microsoft/omsagent/proxy.conf',
+  $proxy_port = 8123,
+  $proxy_protocol = 'https'
 ) {
 
 }
