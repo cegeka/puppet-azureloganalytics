@@ -72,6 +72,16 @@ class azureloganalytics::config (
         '$ModLoad imtcp',
         '$InputTCPServerRun 514'
       ]
+    },
+    'syslog-config-omsagent' => {
+      'content' => [
+        'if not($rawmsg contains "CEF:") or not($rawmsg contains "ASA-") then @127.0.0.1:25224'
+      ]
+    },
+    'security-config-omsagent' => {
+      'content' => [
+        'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then @127.0.0.1:25226'
+      ]
     }
   }
 
