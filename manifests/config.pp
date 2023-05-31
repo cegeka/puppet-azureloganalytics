@@ -75,12 +75,12 @@ class azureloganalytics::config (
     },
     'syslog-config-omsagent' => {
       'content' => [
-        'if not($rawmsg contains "CEF:") or not($rawmsg contains "ASA-") then @127.0.0.1:25224'
+        'if not($rawmsg contains "CEF:") and not($rawmsg contains "ASA-") then @127.0.0.1:25224'
       ]
     },
     'security-config-omsagent' => {
       'content' => [
-        'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then @127.0.0.1:25226'
+        'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then @@127.0.0.1:25226'
       ]
     }
   }
