@@ -6,7 +6,6 @@ class azureloganalytics::config (
   $cef_enable = $azureloganalytics::cef_enable,
   $omshelper_disable = $azureloganalytics::omshelper_disable
 ) inherits azureloganalytics::params {
-
   if ($omshelper_disable and $cef_enable) {
     $omshelper_content = 'a'
     $ensure_file = present
@@ -37,12 +36,12 @@ class azureloganalytics::config (
   }
 
   sudo::config::cmnd_alias { 'omsagent-cmd':
-    configuration => 'OMSAGENT = /usr/bin/test, /bin/touch, /bin/python, /bin/python2, /bin/python3, /bin/pkill, /opt/microsoft/*'
+    configuration => 'OMSAGENT = /usr/bin/test, /bin/touch, /bin/python, /bin/python2, /bin/python3, /bin/pkill, /opt/microsoft/*',
   }
 
   sudo::config::user { 'omsagent':
-    user => 'omsagent',
-    configuration => 'ALL = NOPASSWD: OMSAGENT'
+    user          => 'omsagent',
+    configuration => 'ALL = NOPASSWD: OMSAGENT',
   }
 
   sudo::config::default_entry { 'nxautomation_requiretty' :
@@ -56,35 +55,36 @@ class azureloganalytics::config (
   }
 
   sudo::config::user { 'nxautomation':
-    user => 'omsagent',
-    configuration => 'ALL = NOPASSWD: ALL'
+    user          => 'omsagent',
+    configuration => 'ALL = NOPASSWD: ALL',
   }
 
   $rsyslog_config = {
     'udp_syslog_reception' => {
       'content' => [
         '$ModLoad imudp',
-        '$UDPServerRun 514'
+        '$UDPServerRun 514',
       ]
     },
     'tcp_syslog_reception' => {
       'content' => [
         '$ModLoad imtcp',
-        '$InputTCPServerRun 514'
+        '$InputTCPServerRun 514',
       ]
     },
     'syslog-config-omsagent' => {
       'content' => [
-        'if not($rawmsg contains "CEF:") and not($rawmsg contains "ASA-") then @127.0.0.1:25224'
+        'if not($rawmsg contains "CEF:") and not($rawmsg contains "ASA-") then @127.0.0.1:25224',
+        'if not($rawmsg contains "CEF:") and not($rawmsg contains "ASA-") then /var/log/no-cef.log',
       ]
     },
     'security-config-omsagent' => {
       'content' => [
-        'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then @@127.0.0.1:25226'
+        'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then @@127.0.0.1:25226',
+        'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then /var/log/cef.log',
       ]
     }
   }
 
   create_resources('::rsyslog::config::directives',$rsyslog_config)
-
 }
