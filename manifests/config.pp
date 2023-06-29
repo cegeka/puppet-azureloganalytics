@@ -82,6 +82,7 @@ class azureloganalytics::config (
       'content' => [
         'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then @@127.0.0.1:25226',
         'if $rawmsg contains "CEF:" or $rawmsg contains "ASA-" then /var/log/cef.log',
+        '& stop'
       ]
     }
   }
